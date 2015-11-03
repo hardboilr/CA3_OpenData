@@ -14,6 +14,8 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Priority;
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
@@ -83,13 +85,15 @@ public class JWTAuthenticationFilter implements ContainerRequestFilter {
 
       } catch (ParseException | JOSEException e) {
         throw new NotAuthorizedException("You are not authorized to perform this action",Response.Status.FORBIDDEN);        
-      }
+      } catch (Exception ex) {
+            Logger.getLogger(JWTAuthenticationFilter.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
   }
   
-  private UserPrincipal getPricipalByUserId(String userId) {
+  private UserPrincipal getPricipalByUserId(String userName) throws Exception {
     UserFacade facade = new UserFacade();
-    User user = facade.getUserByUserId(userId);
+    User user = facade.getUserByUserName(userName);
     if (user != null) {
       return new UserPrincipal(user.getUserName(), user.getRoles());  
     }
