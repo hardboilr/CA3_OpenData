@@ -13,7 +13,6 @@ angular.module('myApp.CreateUser', ['ngRoute'])
             var self = this;
             self.user = {};
             self.createUser = function () {
-                alert("hej");
                 $http.post("api/create", self.user);
             };
         });

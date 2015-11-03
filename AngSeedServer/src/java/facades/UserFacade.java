@@ -13,14 +13,16 @@ import security.PasswordHash;
 
 public class UserFacade {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);;
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
+
+    ;
 
     public UserFacade() {
         try {
             //Test Users
-            User user = new User("user", PasswordHash.createHash("test"));
-            User admin = new User("admin", PasswordHash.createHash("test"));
-            User both = new User("user_admin", PasswordHash.createHash("test"));
+            User user = new User("user", "test");
+            User admin = new User("admin", "test");
+            User both = new User("user_admin", "test");
             user.AddRole("User");
             admin.AddRole("Admin");
             both.AddRole("User");
@@ -54,6 +56,7 @@ public class UserFacade {
         if (user != null) {
             throw new Exception("User with user-name: " + u.getUserName() + " already exists");
         } else {
+            u.setPassword(PasswordHash.createHash(u.getPassword()));
             em.getTransaction().begin();
             em.persist(u);
             em.getTransaction().commit();
@@ -65,24 +68,23 @@ public class UserFacade {
      Return the Roles if users could be authenticated, otherwise null
      */
     public List<String> authenticateUser(String userName, String password) throws NoSuchAlgorithmException, InvalidKeySpecException, Exception {
+        
         EntityManager em = getEntityManager();
-        User user = new User();
+        User user;
         try {
-            TypedQuery<User> query = em.createNamedQuery("User.findByUserName", User.class).setParameter("userName", userName);
-            List<User> users = query.getResultList();
-            if (!users.isEmpty()) {
-                user = users.get(0);
-            } else {
+            user = em.find(User.class, userName);
+            if (user == null) {
                 throw new Exception("No user found with user-name: " + userName);
+            } 
+            if (PasswordHash.validatePassword(password, user.getPassword())) {
+                return user.getRoles();
+            } else {
+                return null;
             }
         } finally {
             em.close();
         }
-        if (PasswordHash.validatePassword(password, user.getPassword()) == true) {
-            return user.getRoles();
-        } else {
-            return null;
-        }
+
     }
 
     public EntityManager getEntityManager() {
