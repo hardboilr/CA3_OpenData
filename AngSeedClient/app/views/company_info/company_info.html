@@ -1,1 +1,164 @@
-<h1>Company Info</h1>
+<div ng-controller="CompanyInfoCtrl as ctrl">
+    <div class="panel panel-success" >
+        <div class="panel-heading"> 
+            <h3 class="panel-title"><strong>Search for a Company</strong></h3> 
+        </div> <div class="panel-body"> 
+            <form class="form-horizontal"> 
+                <div class="form-horizontal"> 
+                    <fieldset > 
+                        <div class="form-group" id="searchGroup"> 
+                            <label class="col-sm-2 control-label" for="searchQuery">Search query</label> 
+                            <div class="col-sm-6"> 
+                                <input type="text" class="form-control" id="searchQuery" name="search" placeholder="Required" ng-model="ctrl.searchQuery.query"> 
+                            </div> 
+                        </div> 
+                        <div class="form-group"> 
+                            <label class="col-sm-2 control-label" for="searchOption">Search Option</label> 
+                            <div class="col-sm-6"> 
+                                <select id="searchOption" name="searchOption" class="form-control" ng-model="ctrl.searchQuery.option"> 
+                                    <option value="vat">CVR</option> 
+                                    <option value="name">Company Name</option> 
+                                    <option value="phone">Phone Number</option> 
+                                </select> 
+                            </div> 
+                        </div> 
+                        <div class="form-group" id="countryGroup"> 
+                            <label class="col-sm-2 control-label" for="country">Country</label> 
+                            <div class="col-sm-6"> 
+                                <select id="country" name="country" class="form-control" ng-model="ctrl.searchQuery.country"> 
+                                    <option value="dk">DK</option> 
+                                    <option value="no">NO</option> 
+                                </select> 
+                            </div> 
+                        </div> 
+                        <div class="form-group"> 
+                            <label class="col-sm-2 control-label"></label> 
+                            <div class="col-sm-6"> 
+                                <button type="button" class="btn btn-success" ng-click="ctrl.search()">Search</button> 
+                            </div> 
+                        </div> 
+                    </fieldset> 
+                </div> 
+            </form>
+        </div> 
+    </div>
+    <div class="additional-info" ng-show="ctrl.companyFound">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ctrl.companyInfo.name}}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class=" col-md-9 col-lg-9 "> 
+                                    <table class="table table-user-information">
+                                        <tbody>
+                                            <tr>
+                                                <td>CVR</td>
+                                                <td>{{ctrl.companyInfo.vat| nullFilter}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Street</td>
+                                                <td>{{ctrl.companyInfo.address| nullFilter}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>City and Zipcode</td>
+                                                <td>{{ctrl.companyInfo.city| nullFilter}} {{ctrl.companyInfo.zipcode| nullFilter}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email</td>
+                                                <td><a href="mailto:{{ctrl.companyInfo.email}}">{{ctrl.companyInfo.email| nullFilter}}</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Phone Number</td>
+                                                <td>{{ctrl.companyInfo.phone| nullFilter}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Fax Number</td>
+                                                <td>{{ctrl.companyInfo.fax| nullFilter}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Start Date</td>
+                                                <td>{{ctrl.companyInfo.startdate| date| nullFilter}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Number of Employees</td>
+                                                <td>{{ctrl.companyInfo.employees| nullFilter}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Industry Code</td>
+                                                <td>{{ctrl.companyInfo.industrycode| nullFilter}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Industry Description</td>
+                                                <td>{{ctrl.companyInfo.industrydesc| nullFilter}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Company Code</td>
+                                                <td>{{ctrl.companyInfo.companycode| nullFilter}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Company Description</td>
+                                                <td>{{ctrl.companyInfo.companydesc| nullFilter}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bankrupt</td>
+                                                <td>{{ctrl.companyInfo.creditbankrupt| bankruptFilter | nullFilter}}</td>
+                                            </tr>
+
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <uib-accordion ng-repeat="productionunit in ctrl.companyInfo.productionunits">
+                            <uib-accordion-group heading="{{productionunit.name| nullFilter}}" >
+                                <table class="table table-user-information">
+                                    <tbody>
+                                        <tr>
+                                            <td>Production Unit Number</td>
+                                            <td>{{productionunit.pno| nullFilter}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Street</td>
+                                            <td>{{productionunit.address| nullFilter}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>City and Zipcode</td>
+                                            <td>{{productionunit.city| nullFilter}} {{productionunit.zipcode| nullFilter}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phone</td>
+                                            <td>{{productionunit.phone| nullFilter}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fax Number</td>
+                                            <td>{{ctrl.companyInfo.fax| nullFilter}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td><a href="mailto:{{productionunit.email}}">{{productionunit.email| nullFilter}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Start Date</td>
+                                            <td>{{ctrl.companyInfo.startdate| nullFilter| date}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Number of Employees</td>
+                                            <td>{{productionunit.employees| nullFilter}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </uib-accordion-group>
+                        </uib-accordion>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
