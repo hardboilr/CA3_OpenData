@@ -65,15 +65,12 @@ public class UserFacade {
     /*
      Return the Roles if users could be authenticated, otherwise null
      */
-    public List<String> authenticateUser(String userName, String password) throws NoSuchAlgorithmException, InvalidKeySpecException, Exception {
+    public List<String> authenticateUser(String userName, String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         
         EntityManager em = getEntityManager();
         User user;
         try {
             user = em.find(User.class, userName);
-            if (user == null) {
-                throw new Exception("No user found with user-name: " + userName);
-            } 
             if (PasswordHash.validatePassword(password, user.getPassword())) {
                 return user.getRoles();
             } else {

@@ -52,7 +52,7 @@ public class Login {
       responseJson.addProperty("token", token);  
       return Response.ok(new Gson().toJson(responseJson)).build();
     }  
-    throw new NotAuthorizedException("Ilegal username or password",Response.Status.UNAUTHORIZED);
+    throw new NotAuthorizedException("Invalid username or password",Response.Status.NOT_FOUND);
   }
   
   private List<String>  authenticate(String userName, String password) throws InvalidKeySpecException, Exception{

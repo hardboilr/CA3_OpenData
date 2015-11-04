@@ -7,22 +7,11 @@
     <class>entity.User</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mysql_ca3_dev?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/CA3_dev?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="root"/>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-      <property name="eclipselink.canonicalmodel.subpackage" value="dev"/>
-    </properties>
-  </persistence-unit>
-  <persistence-unit name="pu_openshift" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <non-jta-data-source>java:/comp/env/jdbc/MySQLDS</non-jta-data-source>
-    <class>entity.User</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
-      <property name="eclipselink.canonicalmodel.subpackage" value="openshift"/>
     </properties>
   </persistence-unit>
 </persistence>
