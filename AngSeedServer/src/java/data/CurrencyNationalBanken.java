@@ -3,6 +3,7 @@ package data;
 import deploy.DeploymentConfiguration;
 import entity.Currency;
 import entity.DailyRate;
+import facades.CurrencyFacade;
 import java.io.IOException;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
@@ -12,8 +13,6 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -21,76 +20,72 @@ import javax.persistence.Persistence;
 public class CurrencyNationalBanken extends DefaultHandler {
 
     private EntityManagerFactory emf;
-    private List<DailyRate> dailyRates;
+    private List<DailyRate> dailyRates = new ArrayList();;
     private boolean isCached;
     private java.sql.Date dateField;
+    private int count = 0;
+    private java.sql.Date date;
 
     public CurrencyNationalBanken() {
-        cache();
+//        cache();
+        
         emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
     }
 
     @Override
     public void startDocument() throws SAXException {
-        System.out.println("Start Document (Sax-event)");
-
     }
 
     @Override
     public void endDocument() throws SAXException {
-        System.out.println("End Document (Sax-event)");
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        for(DailyRate rate : dailyRates){
+            em.persist(rate);
+        }
+        em.getTransaction().commit();
+        em.close();
+//        isCached = true;
     }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        EntityManager em = getEntityManager();
-        System.out.print("Element: " + localName + ": ");
-
-        Currency cur = new Currency();
-
-        DailyRate dailyRate = new DailyRate();
-
-        for (int i = 0; i < attributes.getLength(); i++) {
-
-            switch (attributes.getLocalName(i)) {
-
-                case "id":
-                    String date1 = attributes.getValue(i);
-                    dateField = java.sql.Date.valueOf(date1);
-                    break;
-                case "code":
-                    cur = em.find(Currency.class, attributes.getValue(i));
-                    dailyRate.setCurrency(cur);
-                    break;
-                case "rate":
-                    dailyRate.setValue(Float.parseFloat(attributes.getValue(i)));
-                    dailyRate.setDateField(dateField);
-                    break;
-
-                default:
-                    break;
+        if (count == 1){
+            for (int i = 0; i < attributes.getLength(); i++) {
+                date = java.sql.Date.valueOf(attributes.getValue(i));
             }
-            
-            em.getTransaction().begin();
-            em.persist(dailyRate);
-            em.getTransaction().commit();
-            em.close();
-
-            dailyRates.add(dailyRate);
-            isCached = true;
-
-            System.out.print("[Atribute: NAME: " + attributes.getLocalName(i) + " VALUE: " + attributes.getValue(i) + "] ");
+        } else if (count > 1){
+            DailyRate rate = new DailyRate();
+            EntityManager em = getEntityManager();
+            for (int i = 0; i < attributes.getLength(); i++) {
+                switch (attributes.getLocalName(i)){
+                    case "code" : 
+                        Currency cur = em.find(Currency.class, attributes.getValue(i)); 
+                        rate.setCurrency(cur);
+                        rate.setDateField(date);
+                        break;
+                    case "rate" :
+                        try {
+                        rate.setValue(Float.parseFloat(attributes.getValue(i)));
+                        } catch(NumberFormatException e){
+                            rate.setValue(0f);
+                        }
+                        break;
+                    default : break;    
+                }
+            }
+            CurrencyFacade.addDailyRate(rate);
         }
-        System.out.println("");
-    }
+        count++;
+     }   
+     
+      
 
     public List<DailyRate> getDailyRates() {
         if (isCached) {
-            System.out.println("nu returnerer jeg den cachede");
             return dailyRates;
         } else {
             try {
-                System.out.println("nu kører jeg");
                 XMLReader xr = XMLReaderFactory.createXMLReader();
                 xr.setContentHandler(new CurrencyNationalBanken());
                 URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
@@ -99,19 +94,7 @@ public class CurrencyNationalBanken extends DefaultHandler {
                 e.printStackTrace();
             }
         }
-        System.out.println("nu returnerer jeg den nye");
         return dailyRates;
-    }
-
-    public static void main(String[] argv) {
-//        try {
-//            XMLReader xr = XMLReaderFactory.createXMLReader();
-//            xr.setContentHandler(new CurrencyNationalBanken());
-//            URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
-//            xr.parse(new InputSource(url.openStream()));
-//        } catch (SAXException | IOException e) {
-//            e.printStackTrace();
-//        }
     }
 
     private void cache() {
@@ -119,11 +102,13 @@ public class CurrencyNationalBanken extends DefaultHandler {
             @Override
             public void run() {
                 isCached = false;
+                getDailyRates();
             }
         };
         ScheduledExecutorService service = Executors
                 .newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(runnable, 0, 24, TimeUnit.HOURS);
+        service.scheduleAtFixedRate(runnable, 0, 1, TimeUnit.MINUTES);
+        
     }
 
     public boolean isCached() {
