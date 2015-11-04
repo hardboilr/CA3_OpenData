@@ -3,6 +3,7 @@ package facades;
 import data.CurrencyNationalBanken;
 import deploy.DeploymentConfiguration;
 import entity.Currency;
+import entity.DailyRate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -22,7 +23,7 @@ public class CurrencyFacade {
         cnb = new CurrencyNationalBanken();
     }
     
-    public List<Currency> getCurrencies() {
+    public List<DailyRate> getDailyRates() {
       return cnb.getDailyRates();
     }
     

@@ -86,29 +86,32 @@ public class CurrencyNationalBanken extends DefaultHandler {
 
     public List<DailyRate> getDailyRates() {
         if (isCached) {
+            System.out.println("nu returnerer jeg den cachede");
             return dailyRates;
         } else {
             try {
+                System.out.println("nu kører jeg");
                 XMLReader xr = XMLReaderFactory.createXMLReader();
                 xr.setContentHandler(new CurrencyNationalBanken());
                 URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
                 xr.parse(new InputSource(url.openStream()));
-                return null;
             } catch (SAXException | IOException e) {
                 e.printStackTrace();
             }
         }
+        System.out.println("nu returnerer jeg den nye");
+        return dailyRates;
     }
 
     public static void main(String[] argv) {
-        try {
-            XMLReader xr = XMLReaderFactory.createXMLReader();
-            xr.setContentHandler(new CurrencyNationalBanken());
-            URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
-            xr.parse(new InputSource(url.openStream()));
-        } catch (SAXException | IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            XMLReader xr = XMLReaderFactory.createXMLReader();
+//            xr.setContentHandler(new CurrencyNationalBanken());
+//            URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
+//            xr.parse(new InputSource(url.openStream()));
+//        } catch (SAXException | IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void cache() {
