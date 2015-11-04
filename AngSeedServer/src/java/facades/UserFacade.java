@@ -15,8 +15,6 @@ public class UserFacade {
 
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
 
-    ;
-
     public UserFacade() {
         try {
             //Test Users
