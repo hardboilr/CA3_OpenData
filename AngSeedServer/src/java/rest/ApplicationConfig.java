@@ -22,6 +22,7 @@ public class ApplicationConfig extends Application {
    */
   private void addRestResourceClasses(Set<Class<?>> resources) {
     resources.add(rest.AdminRest.class);
+    resources.add(rest.AllUsersRest.class);
     resources.add(rest.CreateUserRest.class);
     resources.add(rest.CurrencyRest.class);
     resources.add(rest.UserRest.class);

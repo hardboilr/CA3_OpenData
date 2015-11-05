@@ -26,8 +26,6 @@ public class CreateUserRest {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void createUser(String user) throws Exception {
-        System.out.println("String user: " + user);
-        System.out.println("I rest");
         User u = gson.fromJson(user, User.class);
         u.AddRole("User");
         System.out.println(u.getUserName());

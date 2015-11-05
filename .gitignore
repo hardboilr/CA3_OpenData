@@ -1,6 +1,8 @@
 #---------
 #Netbeans
+#updated: 5. nov 2015 - Added persistence.xml
 #---------
+AngSeedServer/src/conf/persistence.xml
 AngSeedServer/build
 AngSeedServer/dist/
 AngSeedServer/nbproject/private/

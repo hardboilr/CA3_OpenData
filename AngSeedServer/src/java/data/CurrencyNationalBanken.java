@@ -40,7 +40,6 @@ public class CurrencyNationalBanken extends DefaultHandler implements Runnable {
                 Currency cur = em.find(Currency.class, dailyRate.getCurrency().getCurrencyCode());
                 if (cur != null) { //found existing currency
                     dailyRate.setCurrency(cur);
-//                    cur.addDailyRate(dailyRate);
                 }
                 em.getTransaction().begin();
                 em.persist(dailyRate);
@@ -91,9 +90,6 @@ public class CurrencyNationalBanken extends DefaultHandler implements Runnable {
     }
 
     public static List<DailyRate> getDailyRates() {
-//        for (DailyRate rate : dailyRates) {
-//            System.out.println(rate.getCurrency().getName());
-//        }
         return dailyRates;
     }
 
