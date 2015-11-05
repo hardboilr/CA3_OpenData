@@ -14,7 +14,7 @@ describe('myApp.AllUsers AllUsersCtrl', function () {
 
     beforeEach(inject(function ($httpBackend, $rootScope, $controller) {
         httpBackendMock = $httpBackend;
-        httpBackendMock.expectGET('api/admin/users').respond(users);
+        httpBackendMock.expectGET('api/admin/users').respond(user);
         scope = $rootScope.$new();
         ctrl = $controller('AllUsersCtrl', {$scope: scope});
     }));
@@ -22,12 +22,12 @@ describe('myApp.AllUsers AllUsersCtrl', function () {
     it('Should fetch a list of users', function () {
         expect(scope.info).toBeUndefined();
         httpBackendMock.flush();
-//        console.info(scope);  
-        expect(scope.data).toEqual([
-            {userName: "user", password: "test"},
-            {userName: "admin", password: "test"},
-            {userName: "auser_admin", password: "test"}
-        ]);
-//        expect(scope.data.userName).toEqual("user");
+        console.info(scope.users);  
+//        expect(scope.data).toEqual([
+//            {userName: "user", password: "test"},
+//            {userName: "admin", password: "test"},
+//            {userName: "auser_admin", password: "test"}
+//        ]);
+        expect(scope.data.userName).toEqual("user");
     });
 });

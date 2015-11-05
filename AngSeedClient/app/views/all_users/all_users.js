@@ -8,7 +8,6 @@ angular.module('myApp.AllUsers', ['ngRoute'])
                     controller: 'AllUsersCtrl'
                 });
             }])
-
         .controller('AllUsersCtrl', function ($http) {
             var self = this;
             self.usersFound = false;
@@ -16,13 +15,12 @@ angular.module('myApp.AllUsers', ['ngRoute'])
             $http.get("api/admin/users")
                     .success(function (data) {
                         self.users = data;
-                self.usersFound = true;
+                        self.usersFound = true;
                     }).error(function (data) {
                 $rootScope.error = data.error + " : " + data.message;
             });
 
             self.deleteUser = function (data) {
-                alert("Delete");
                 $http({
                     method: 'PUT',
                     url: "api/admin/user",
