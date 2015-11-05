@@ -11,19 +11,21 @@ angular.module('myApp.AllUsers', ['ngRoute'])
 
         .controller('AllUsersCtrl', function ($http) {
             var self = this;
+            self.usersFound = false;
             self.users = [];
-            $http.get("http://localhost:8080/AngSeedServer/api/admin/users")
+            $http.get("api/admin/users")
                     .success(function (data) {
                         self.users = data;
+                self.usersFound = true;
                     }).error(function (data) {
                 $rootScope.error = data.error + " : " + data.message;
             });
-            
-            self.deleteUser = function(data) {
+
+            self.deleteUser = function (data) {
                 alert("Delete");
                 $http({
                     method: 'PUT',
-                    url: "http://localhost:8080/AngSeedServer/api/admin/user",
+                    url: "api/admin/user",
                     data: {userName: data}
                 });
             };

@@ -1,6 +1,6 @@
 <div ng-controller="AllUsersCtrl as ctrl">
     <h1>All Users</h1>
-    <table class="table table-responsive">
+    <table class="table table-responsive" ng-show="ctrl.usersFound">
         <thead>
             <tr>
                 <td>User Name</td>
