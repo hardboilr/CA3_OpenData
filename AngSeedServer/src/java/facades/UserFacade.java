@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import security.PasswordHash;
 
@@ -16,21 +17,6 @@ public class UserFacade {
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
 
     public UserFacade() {
-        try {
-            //Test Users
-            User user = new User("user", "test");
-            User admin = new User("admin", "test");
-            User both = new User("user_admin", "test");
-            user.AddRole("User");
-            admin.AddRole("Admin");
-            both.AddRole("User");
-            both.AddRole("Admin");
-            createUser(user);
-            createUser(admin);
-            createUser(both);
-        } catch (Exception ex) {
-            System.out.println(ex.getStackTrace());
-        }
     }
 
     public User getUserByUserName(String userName) throws Exception {
@@ -66,14 +52,14 @@ public class UserFacade {
      Return the Roles if users could be authenticated, otherwise null
      */
     public List<String> authenticateUser(String userName, String password) throws NoSuchAlgorithmException, InvalidKeySpecException, Exception {
-        
+
         EntityManager em = getEntityManager();
         User user;
         try {
             user = em.find(User.class, userName);
             if (user == null) {
                 throw new Exception("No user found with user-name: " + userName);
-            } 
+            }
             if (PasswordHash.validatePassword(password, user.getPassword())) {
                 return user.getRoles();
             } else {
@@ -87,5 +73,19 @@ public class UserFacade {
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
+    }
+
+    public List<User> getAllUsers() {
+        EntityManager em = getEntityManager();
+        Query query = em.createQuery("SELECT u FROM User u");
+        return query.getResultList();
+    }
+
+    public void deleteUser(String userName) {
+        EntityManager em = getEntityManager();
+        User user = em.find(User.class, userName);
+        em.getTransaction().begin();
+        em.remove(user);
+        em.getTransaction().commit();
     }
 }

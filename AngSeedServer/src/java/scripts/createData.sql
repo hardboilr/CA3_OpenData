@@ -1,34 +1,42 @@
 INSERT INTO CURRENCY VALUES ('AUD', 'Australian dollars');
 INSERT INTO CURRENCY VALUES ('BGN', 'Bulgarian lev');
 INSERT INTO CURRENCY VALUES ('BRL', 'Brazilian real');
+INSERT INTO CURRENCY VALUES ('CAD', 'Canadian dollars');
+INSERT INTO CURRENCY VALUES ('CHF', 'Swiss francs');
+INSERT INTO CURRENCY VALUES ('CNY', 'Chines yuan renminbi');
+INSERT INTO CURRENCY VALUES ('EUR', 'Euro');
+INSERT INTO CURRENCY VALUES ('GBP', 'Pounds sterling');
+INSERT INTO CURRENCY VALUES ('HKD', 'Hong Kong dollars');
+INSERT INTO CURRENCY VALUES ('HRK', 'Croatian kuna');
+INSERT INTO CURRENCY VALUES ('HUF', 'Hungarian forints');
+INSERT INTO CURRENCY VALUES ('IDR', 'Indonesian rupiah');
+INSERT INTO CURRENCY VALUES ('ILS', 'Isreali shekel');
+INSERT INTO CURRENCY VALUES ('INR', 'Indian rupee');
+INSERT INTO CURRENCY VALUES ('ISK', 'Icelandic kronur');
+INSERT INTO CURRENCY VALUES ('JPY', 'Japanese yen');
+INSERT INTO CURRENCY VALUES ('KRW', 'South Korean won');
+INSERT INTO CURRENCY VALUES ('MXN', 'Mexican peso');
+INSERT INTO CURRENCY VALUES ('MYR', 'Malaysian ringgit');
+INSERT INTO CURRENCY VALUES ('NOK', 'Norwegian kroner');
+INSERT INTO CURRENCY VALUES ('NZD', 'New Zealand dollars');
+INSERT INTO CURRENCY VALUES ('PHP', 'Philippine peso');
+INSERT INTO CURRENCY VALUES ('PLN', 'Polish zlotys');
+INSERT INTO CURRENCY VALUES ('RON', 'Romanian leu');
+INSERT INTO CURRENCY VALUES ('RUB', 'Russian rouble');
+INSERT INTO CURRENCY VALUES ('SEK', 'Swedish kronor');
+INSERT INTO CURRENCY VALUES ('SGD', 'Singapore dollars');
+INSERT INTO CURRENCY VALUES ('THB', 'Thai baht');
+INSERT INTO CURRENCY VALUES ('TRY', 'Turkish lira');
+INSERT INTO CURRENCY VALUES ('USD', 'US dollars');
+INSERT INTO CURRENCY VALUES ('XDR', 'SDR (Calculated **)');
+INSERT INTO CURRENCY VALUES ('ZAR', 'South African rand');
 
-INSERT INTO CURRENCY VALUES ('CAD' desc="Canadian dollars" rate="517.75"/>
-<currency code="CHF" desc="Swiss francs" rate="686.24"/>
-<currency code="CNY" desc="Chinese yuan renminbi" rate="107.25"/>
-<currency code="CZK" desc="Czech koruny" rate="27.52"/>
-<currency code="EUR" desc="Euro" rate="745.87"/>
-<currency code="GBP" desc="Pounds sterling" rate="1045.88"/>
-<currency code="HKD" desc="Hong Kong dollars" rate="87.68"/>
-<currency code="HRK" desc="Croatian kuna" rate="98.32"/>
-<currency code="HUF" desc="Hungarian forints" rate="2.379"/>
-<currency code="IDR" desc="Indonesian rupiah" rate="0.0499"/>
-<currency code="ILS" desc="Israeli shekel" rate="175.32"/>
-<currency code="INR" desc="Indian rupee" rate="10.34"/>
-<currency code="ISK" desc="Icelandic kronur *" rate="-"/>
-<currency code="JPY" desc="Japanese yen" rate="5.6228"/>
-<currency code="KRW" desc="South Korean won" rate="0.5989"/>
-<currency code="MXN" desc="Mexican peso" rate="41.22"/>
-<currency code="MYR" desc="Malaysian ringgit" rate="158.35"/>
-<currency code="NOK" desc="Norwegian kroner" rate="79.85"/>
-<currency code="NZD" desc="New Zealand dollars" rate="455.80"/>
-<currency code="PHP" desc="Philippine peso" rate="14.48"/>
-<currency code="PLN" desc="Polish zlotys" rate="175.33"/>
-<currency code="RON" desc="Romanian leu" rate="168.20"/>
-<currency code="RUB" desc="Russian rouble" rate="10.73"/>
-<currency code="SEK" desc="Swedish kronor" rate="79.40"/>
-<currency code="SGD" desc="Singapore dollars" rate="485.50"/>
-<currency code="THB" desc="Thai baht" rate="19.10"/>
-<currency code="TRY" desc="Turkish lira" rate="238.89"/>
-<currency code="USD" desc="US dollars" rate="679.55"/>
-<currency code="XDR" desc="SDR (Calculated **)" rate="948.13"/>
-<currency code="ZAR" desc="South African rand" rate="48.90"/>
+
+INSERT INTO USER VALUES ('admin','1000:87969d70829ee172d64285c1a007156b6248436dcdba6443:fe59257438e46d901bad273596e26c2561a6b7f1e6c07051');
+INSERT INTO USER VALUES ('user','1000:c3077e7e1d79b97ba1a34f5537aa069070bc3d844ecf1c82:3ea782f999484087fc45ffed02cde651160e5313ce09ff88');
+INSERT INTO USER VALUES ('user_admin','1000:ffbaea8db8684e6390d5d8ac6565dc64496bef179e4a41ad:a9688e597ddc40a1e2b2409c395fcf255dba246c80a17461');
+
+INSERT INTO USER_ROLES VALUES ('admin', 'Admin');
+INSERT INTO USER_ROLES VALUES ('user', 'User');
+INSERT INTO USER_ROLES VALUES ('user_admin', 'Admin');
+INSERT INTO USER_ROLES VALUES ('user_admin', 'User');

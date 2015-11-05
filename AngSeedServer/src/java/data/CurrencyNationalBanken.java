@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -28,6 +26,7 @@ public class CurrencyNationalBanken extends DefaultHandler {
     public CurrencyNationalBanken() {
         cache();
         emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
+        dailyRates = new ArrayList();
     }
 
     @Override
@@ -43,45 +42,56 @@ public class CurrencyNationalBanken extends DefaultHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        EntityManager em = getEntityManager();
+//        EntityManager em = getEntityManager();
+//        System.out.print("Element: " + localName + ": ");
+//
+//        DailyRate dailyRate = new DailyRate();
+//
+//        for (int i = 4; i < attributes.getLength(); i++) {
+//            String local = attributes.getLocalName(i);
+//            switch (local) {
+//
+//                case "id":
+//                    String date1 = attributes.getValue(i);
+//                    dateField = java.sql.Date.valueOf(date1);
+//                    break;
+//                case "code":
+//                    Currency cur = em.find(Currency.class, attributes.getValue(i));
+//                    dailyRate.setCurrency(cur);
+//                    break;
+//                case "rate":
+//                    dailyRate.setValue(Float.parseFloat(attributes.getValue(i)));
+//                    dailyRate.setDateField(dateField);
+//                    break;
+//
+//                default:
+//                    break;
+//            }
+//
+//                dailyRates.add(dailyRate);
+//            if (dailyRate.getDateField() != null) {
+//            }
+//
+//            System.out.print("[Atribute: NAME: " + attributes.getLocalName(i) + " VALUE: " + attributes.getValue(i) + "] ");
+//        }
+//        if (!dailyRates.isEmpty()) {
+//            em.getTransaction().begin();
+//            for (DailyRate dailyRate1 : dailyRates) {
+//                em.persist(dailyRate1);
+//            }
+//            em.getTransaction().commit();
+//            em.close();
+//
+//            isCached = true;
+//        }
+
         System.out.print("Element: " + localName + ": ");
-
-        Currency cur = new Currency();
-
-        DailyRate dailyRate = new DailyRate();
-
+        System.out.println(attributes.getLength());
         for (int i = 0; i < attributes.getLength(); i++) {
-
-            switch (attributes.getLocalName(i)) {
-
-                case "id":
-                    String date1 = attributes.getValue(i);
-                    dateField = java.sql.Date.valueOf(date1);
-                    break;
-                case "code":
-                    cur = em.find(Currency.class, attributes.getValue(i));
-                    dailyRate.setCurrency(cur);
-                    break;
-                case "rate":
-                    dailyRate.setValue(Float.parseFloat(attributes.getValue(i)));
-                    dailyRate.setDateField(dateField);
-                    break;
-
-                default:
-                    break;
-            }
-            
-            em.getTransaction().begin();
-            em.persist(dailyRate);
-            em.getTransaction().commit();
-            em.close();
-
-            dailyRates.add(dailyRate);
-            isCached = true;
-
             System.out.print("[Atribute: NAME: " + attributes.getLocalName(i) + " VALUE: " + attributes.getValue(i) + "] ");
         }
         System.out.println("");
+
     }
 
     public List<DailyRate> getDailyRates() {
@@ -90,7 +100,6 @@ public class CurrencyNationalBanken extends DefaultHandler {
             return dailyRates;
         } else {
             try {
-                System.out.println("nu kører jeg");
                 XMLReader xr = XMLReaderFactory.createXMLReader();
                 xr.setContentHandler(new CurrencyNationalBanken());
                 URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
