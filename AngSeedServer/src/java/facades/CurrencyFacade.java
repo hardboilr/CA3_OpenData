@@ -3,15 +3,11 @@ package facades;
 import data.CurrencyNationalBanken;
 import entity.DailyRate;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 public class CurrencyFacade {
 
-    private EntityManagerFactory emf;
 
-    public CurrencyFacade(EntityManagerFactory emf) {
-        this.emf = emf;
+    public CurrencyFacade() {
     }
 
     /**
@@ -23,9 +19,5 @@ public class CurrencyFacade {
      */
     public List<DailyRate> getDailyRates() {
         return CurrencyNationalBanken.getDailyRates();
-    }
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
     }
 }

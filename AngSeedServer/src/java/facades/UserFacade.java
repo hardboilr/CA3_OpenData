@@ -7,29 +7,28 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import security.PasswordHash;
 
 public class UserFacade {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
+    private EntityManagerFactory emf;
 
-    public UserFacade() {
+    public UserFacade(){
+        emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
     }
 
     public User getUserByUserName(String userName) throws Exception {
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<User> query = em.createNamedQuery("User.findByUserName", User.class).setParameter("userName", userName);
-            List<User> users = query.getResultList();
-            if (!users.isEmpty()) {
-                return users.get(0);
-            } else {
+            User user = em.find(User.class, userName);
+            return user;
+        } catch (NoResultException ex){
                 throw new Exception("No user found with user-name: " + userName);
             }
-        } finally {
+         finally {
             em.close();
         }
     }
@@ -70,11 +69,6 @@ public class UserFacade {
         }
 
     }
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
-
     public List<User> getAllUsers() {
         EntityManager em = getEntityManager();
         Query query = em.createQuery("SELECT u FROM User u");
@@ -88,4 +82,9 @@ public class UserFacade {
         em.remove(user);
         em.getTransaction().commit();
     }
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
 }
