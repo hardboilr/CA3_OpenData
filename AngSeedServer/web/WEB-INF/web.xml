@@ -12,4 +12,7 @@
     <listener>
         <listener-class>deploy.DeploymentConfiguration</listener-class>
     </listener>
+    <listener>
+        <listener-class>data.BackgroundJobManager</listener-class>
+    </listener>
 </web-app>

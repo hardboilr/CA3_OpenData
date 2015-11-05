@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +18,7 @@ public class DailyRate implements Serializable {
 
     private java.sql.Date dateField;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Currency currency;
 
     private float value;
@@ -52,6 +53,7 @@ public class DailyRate implements Serializable {
     }
 
     public void setCurrency(Currency currency) {
+//        currency.addDailyRate(this);
         this.currency = currency;
     }
 

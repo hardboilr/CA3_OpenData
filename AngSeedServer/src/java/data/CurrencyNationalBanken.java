@@ -3,119 +3,109 @@ package data;
 import deploy.DeploymentConfiguration;
 import entity.Currency;
 import entity.DailyRate;
-import facades.CurrencyFacade;
 import java.io.IOException;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class CurrencyNationalBanken extends DefaultHandler {
+public class CurrencyNationalBanken extends DefaultHandler implements Runnable {
 
-    private EntityManagerFactory emf;
-    private List<DailyRate> dailyRates = new ArrayList();;
-    private boolean isCached;
-    private java.sql.Date dateField;
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
+    private static List<DailyRate> dailyRates;
+    List<DailyRate> tmpDailyRates;
     private int count = 0;
     private java.sql.Date date;
 
     public CurrencyNationalBanken() {
-//        cache();
-        
-        emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
+        dailyRates = new ArrayList();
+        tmpDailyRates = new ArrayList();
     }
 
     @Override
     public void startDocument() throws SAXException {
+        tmpDailyRates.clear();
     }
 
     @Override
     public void endDocument() throws SAXException {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        for(DailyRate rate : dailyRates){
-            em.persist(rate);
+        dailyRates = tmpDailyRates;
+        EntityManager em = emf.createEntityManager();
+        try {
+            for (DailyRate dailyRate : dailyRates) {
+                Currency cur = em.find(Currency.class, dailyRate.getCurrency().getCurrencyCode());
+                if (cur != null) { //found existing currency
+                    dailyRate.setCurrency(cur);
+//                    cur.addDailyRate(dailyRate);
+                }
+                em.getTransaction().begin();
+                em.persist(dailyRate);
+                em.getTransaction().commit();
+            }
+        } finally {
+            em.close();
         }
-        em.getTransaction().commit();
-        em.close();
-//        isCached = true;
     }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        if (count == 1){
+        if (count == 1) { //get date
             for (int i = 0; i < attributes.getLength(); i++) {
                 date = java.sql.Date.valueOf(attributes.getValue(i));
             }
-        } else if (count > 1){
+        } else if (count > 1) { //get other data
+            boolean isOk = true;
             DailyRate rate = new DailyRate();
-            EntityManager em = getEntityManager();
+            Currency cur = new Currency();
             for (int i = 0; i < attributes.getLength(); i++) {
-                switch (attributes.getLocalName(i)){
-                    case "code" : 
-                        Currency cur = em.find(Currency.class, attributes.getValue(i)); 
-                        rate.setCurrency(cur);
-                        rate.setDateField(date);
+                switch (attributes.getLocalName(i)) {
+                    case "code":
+                        cur.setCurrencyCode(attributes.getValue(i));
                         break;
-                    case "rate" :
+                    case "desc":
+                        cur.setName(attributes.getValue(i));
+                        break;
+                    case "rate":
                         try {
-                        rate.setValue(Float.parseFloat(attributes.getValue(i)));
-                        } catch(NumberFormatException e){
+                            rate.setValue(Float.parseFloat(attributes.getValue(i)));
+                        } catch (NumberFormatException e) {
                             rate.setValue(0f);
                         }
                         break;
-                    default : break;    
+                    default:
+                        isOk = false;
+                        break;
                 }
             }
-            CurrencyFacade.addDailyRate(rate);
-        }
-        count++;
-     }   
-     
-      
-
-    public List<DailyRate> getDailyRates() {
-        if (isCached) {
-            return dailyRates;
-        } else {
-            try {
-                XMLReader xr = XMLReaderFactory.createXMLReader();
-                xr.setContentHandler(new CurrencyNationalBanken());
-                URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
-                xr.parse(new InputSource(url.openStream()));
-            } catch (SAXException | IOException e) {
-                e.printStackTrace();
+            if (isOk) {
+                rate.setDateField(date);
+                rate.setCurrency(cur);
+                tmpDailyRates.add(rate);
             }
         }
+        count++;
+    }
+
+    public static List<DailyRate> getDailyRates() {
+//        for (DailyRate rate : dailyRates) {
+//            System.out.println(rate.getCurrency().getName());
+//        }
         return dailyRates;
     }
 
-    private void cache() {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                isCached = false;
-                getDailyRates();
-            }
-        };
-        ScheduledExecutorService service = Executors
-                .newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(runnable, 0, 1, TimeUnit.MINUTES);
-        
-    }
-
-    public boolean isCached() {
-        return isCached;
-    }
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+    @Override
+    public void run() {
+        try {
+            XMLReader xr = XMLReaderFactory.createXMLReader();
+            xr.setContentHandler(this);
+            URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
+            xr.parse(new InputSource(url.openStream()));
+        } catch (SAXException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }

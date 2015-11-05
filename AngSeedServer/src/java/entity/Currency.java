@@ -2,6 +2,8 @@ package entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -14,7 +16,8 @@ public class Currency implements Serializable {
 
     private String name;
 
-    @OneToMany(mappedBy = "currency")
+    @ElementCollection
+    @OneToMany(mappedBy = "currency", cascade = CascadeType.PERSIST)
     private List<DailyRate> dailyRates;
 
     public Currency() {

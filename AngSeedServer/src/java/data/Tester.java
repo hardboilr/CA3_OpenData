@@ -1,13 +1,13 @@
-package data;
-
-import entity.DailyRate;
-import facades.CurrencyFacade;
-import java.util.List;
-
-public class Tester {
-    
-    public static void main(String[] args) {
-        
+//package data;
+//
+//import entity.DailyRate;
+//import facades.CurrencyFacade;
+//import java.util.List;
+//
+//public class Tester {
+//    
+//    public static void main(String[] args) {
+//        
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu_dev");
 //        EntityManager em = emf.createEntityManager();
 //        
@@ -40,11 +40,11 @@ public class Tester {
 //        em.persist(dailyRate4);
 //        em.getTransaction().commit();
 //        em.close();
-        
+//        
 //        CurrencyFacade cf = new CurrencyFacade();
 //        List<DailyRate> rates = cf.getDailyRates();
 //        for(DailyRate rate : rates){
 //            System.out.println(rate.getCurrency().getName());
 //        }
-    }
-}
+//    }
+//}
