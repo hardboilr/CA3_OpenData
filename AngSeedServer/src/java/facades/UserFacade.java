@@ -14,9 +14,10 @@ import security.PasswordHash;
 
 public class UserFacade {
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
+    private EntityManagerFactory emf;
 
     public UserFacade() {
+        emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
     }
 
     public User getUserByUserName(String userName) throws Exception {
@@ -30,6 +31,7 @@ public class UserFacade {
                 return new User();
                 /*throw new Exception("No user found with user-name: " + userName);*/
             }
+
         } finally {
             em.close();
         }
@@ -73,10 +75,6 @@ public class UserFacade {
 
     }
 
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
-
     public List<User> getAllUsers() {
         EntityManager em = getEntityManager();
         Query query = em.createQuery("SELECT u FROM User u");
@@ -90,4 +88,9 @@ public class UserFacade {
         em.remove(user);
         em.getTransaction().commit();
     }
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
 }

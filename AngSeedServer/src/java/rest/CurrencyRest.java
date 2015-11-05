@@ -20,7 +20,7 @@ public class CurrencyRest {
 
     @Context
     private UriInfo context;
-    private CurrencyFacade ctrl = new CurrencyFacade(Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME));
+    private CurrencyFacade ctrl = new CurrencyFacade();
     private Gson gson = new Gson();
 
     public CurrencyRest() {

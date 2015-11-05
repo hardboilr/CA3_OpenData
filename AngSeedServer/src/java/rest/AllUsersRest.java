@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 @Path("admin")
 @RolesAllowed("Admin")
 public class AllUsersRest {
-
+    
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     UserFacade uf = new UserFacade();
 
