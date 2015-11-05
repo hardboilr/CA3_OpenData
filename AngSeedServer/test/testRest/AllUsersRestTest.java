@@ -46,6 +46,10 @@ public class AllUsersRestTest {
         server.join();
     }
 
+    /**
+     * Login as admin at get all users. Test that our response-body has all
+     * three users from db
+     */
     @Test
     public void TestGetAllUsers() {
         //First, make a login to get the token for the Authorization, saving the response body in String json
@@ -67,6 +71,10 @@ public class AllUsersRestTest {
                 body("[0].roles", hasItems("Admin"));
     }
 
+    /**
+     * Create a test-user. Login as admin. Get all users and check that we have
+     * 4 users. Delete the test-user and then test that 3 are left.
+     */
     @Test
     public void TestDeleteUser() {
         User user = new User("tobias", "1234");

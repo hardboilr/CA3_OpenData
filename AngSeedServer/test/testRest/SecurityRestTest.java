@@ -46,6 +46,9 @@ public class SecurityRestTest {
         server.join();
     }
 
+    /**
+     * Try to log in with wrong username
+     */
     @Test
     public void LoginWrongUsername() {
         given().
@@ -58,6 +61,9 @@ public class SecurityRestTest {
                 body("error.message", equalTo("Invalid username or password"));
     }
 
+    /**
+     * Try to log in with both wrong username and password
+     */
     @Test
     public void LoginWrongUsernameAndPassword() {
         //wrong username and password
@@ -71,6 +77,9 @@ public class SecurityRestTest {
                 body("error.message", equalTo("Invalid username or password"));
     }
 
+    /**
+     * Log in as user
+     */
     @Test
     public void Login() {
         //Successful login
@@ -83,8 +92,8 @@ public class SecurityRestTest {
                 statusCode(200);
     }
 
-    /*
-     Expect 401 Unauthorized on all because not logged in
+    /**
+     * Expect 401 Unauthorized on all because not logged in
      */
     @Test
     public void testEndPointsNotLoggedIn() {
@@ -151,6 +160,12 @@ public class SecurityRestTest {
                 statusCode(403).
                 body("error.message", equalTo("You are not authorized to perform the requested operation"));
     }
+    
+    /*
+     ADMIN: 
+     Expect 200 on endpoints "/admin/users" + "/admin/user" because ALLOWED
+     Expect 401 on endpoints "/currency/dailyrates" because NOT ALLOWED
+     */
 
     @Test
     public void testEndPointsAdmin() {

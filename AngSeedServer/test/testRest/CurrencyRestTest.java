@@ -21,6 +21,10 @@ public class CurrencyRestTest {
         basePath = "/AngSeedServer/api";
     }
 
+    /**
+     * Login as user and getDailyRates. Test that response-body has all
+     * currencies.
+     */
     @Test
     public void testGetDailyRates() {
         //First, make a login to get the token for the Authorization, saving the response body in String json
