@@ -15,13 +15,14 @@ angular.module('myApp.CompanyInfo', ['ngRoute'])
             self.searchQuery = {};
             self.companyInfo = {};
 
-//            Use this url for karma tests
-            var url = "http://cvrapi.dk/api?vat=31678021&country=dk";
-
-//            Use this url for live testing
-//            var url = "http://cvrapi.dk/api?" + self.searchQuery.option + "=" + self.searchQuery.query + "&country=" + self.searchQuery.country;
-
             self.search = function () {
+//                Use this url for karma tests
+//                var url = "http://cvrapi.dk/api?vat=31678021&country=dk";
+
+//                Use this url for live testing
+                var url = "api/search/" + self.searchQuery.option + "/" + self.searchQuery.query + "/" + self.searchQuery.country;
+
+                $http.defaults.useXDomain = true;
                 $http.get(url)
                         .success(function (data) {
                             if (data.error == undefined) {
