@@ -1,4 +1,20 @@
-<div ng-app="myApp.ExhangeRateInfo" ng-controller="ExchangeRateController as ctrl">
-<h1>Exchange Rate Info</h1>
-<p>Data:{{ctrl.getDailyRates}}</p>>
+<div ng-controller="ExchangeRateController as ctrl" >
+    <h1>Exchange Rate Info</h1>
+    <table class="table" ng-init="ctrl.getDailyRates()">
+        <thead>
+            <tr>
+                <th>Valuta</th>
+                <th>ISO</th> 
+                <th>{{ctrl.dailyRates[0].dateField}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="DailyRate in ctrl.dailyRates">
+                <td>{{DailyRate.currency.name}}</td>
+                <td>{{DailyRate.currency.currencyCode}}</td> 
+                <td>{{DailyRate.value}}</td> 
+            </tr>
+        </tbody>
+
+    </table>
 </div>

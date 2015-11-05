@@ -9,7 +9,7 @@ angular.module('myApp', [
   'myApp.Home',
   'myApp.Documentation',
   'myApp.CompanyInfo',
-  'myApp.ExhangeRateInfo',
+  'myApp.ExchangeRateInfo',
   'myApp.AllUsers',
   'myApp.CreateUser',
   'myApp.filters',

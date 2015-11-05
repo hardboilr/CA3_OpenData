@@ -43,6 +43,7 @@ public class CurrencyNationalBanken extends DefaultHandler implements Runnable {
                 }
                 em.getTransaction().begin();
                 em.persist(dailyRate);
+                em.persist(cur);
                 em.getTransaction().commit();
             }
         } finally {
@@ -54,7 +55,9 @@ public class CurrencyNationalBanken extends DefaultHandler implements Runnable {
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (count == 1) { //get date
             for (int i = 0; i < attributes.getLength(); i++) {
+                System.out.println(attributes.getValue(i));
                 date = java.sql.Date.valueOf(attributes.getValue(i));
+                System.out.println(date);
             }
         } else if (count > 1) { //get other data
             boolean isOk = true;
