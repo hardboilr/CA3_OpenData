@@ -1,9 +1,19 @@
 # CA3
 
-##Sebastian, Jonas & Tobias
+##Testing 
 
-##TODO
+###Facade
+####CurrencyFacade : Sebastian
+####UserFacade : Sebastian
 
-Sebastian: BackEnd: ExceptionMappers + Test
-Jonas: 2
-Tobias: 3
+###Rest
+####AllUsersRest: Tobias
+####CreateUserRest: Tobias
+####CurrencyRest: Tobias
+
+
+###FrontEnd
+####all_users.js: Sebastian
+####company_info.js: Sebastian
+####create_user.js: Jonas
+####exchange_rate_info.js: Tobias
