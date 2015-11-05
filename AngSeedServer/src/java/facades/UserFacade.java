@@ -27,7 +27,8 @@ public class UserFacade {
             if (!users.isEmpty()) {
                 return users.get(0);
             } else {
-                throw new Exception("No user found with user-name: " + userName);
+                return new User();
+                /*throw new Exception("No user found with user-name: " + userName);*/
             }
         } finally {
             em.close();
@@ -58,7 +59,8 @@ public class UserFacade {
         try {
             user = em.find(User.class, userName);
             if (user == null) {
-                throw new Exception("No user found with user-name: " + userName);
+                /*throw new Exception("No user found with user-name: " + userName);*/
+                return null;
             }
             if (PasswordHash.validatePassword(password, user.getPassword())) {
                 return user.getRoles();

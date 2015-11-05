@@ -9,7 +9,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path("create")
 public class CreateUserRest {
@@ -25,12 +27,11 @@ public class CreateUserRest {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void createUser(String user) throws Exception {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createUser(String user) throws Exception {
         User u = gson.fromJson(user, User.class);
         u.AddRole("User");
-        System.out.println(u.getUserName());
-        System.out.println(u.getPassword());
         uf.createUser(u);
+        return Response.status(Response.Status.CREATED).entity(gson.toJson(u)).build();
     }
-
 }

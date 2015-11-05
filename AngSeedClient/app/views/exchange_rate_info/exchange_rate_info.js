@@ -8,7 +8,6 @@ angular.module('myApp.ExchangeRateInfo', ['ngRoute'])
                 });
             }])
         .controller('ExchangeRateController', ['CurrencyFactory', function (CurrencyFactory, $rootScope) {
-                console.log("in controller");
                 var self = this;
                 self.dailyRates = {};
                 self.getDailyRates = function () {
@@ -22,7 +21,6 @@ angular.module('myApp.ExchangeRateInfo', ['ngRoute'])
         .factory('CurrencyFactory', ['$http', function ($http) {
                 var urlBase = 'api/currency';
                 var getDailyRates = function () {
-                    console.log(urlBase + '/' + 'dailyrates');
                     return $http.get(urlBase + '/' + 'dailyrates');
                 };
                 return {
