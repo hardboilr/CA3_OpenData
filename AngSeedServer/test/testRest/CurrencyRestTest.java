@@ -6,6 +6,7 @@ import static com.jayway.restassured.RestAssured.defaultParser;
 import static com.jayway.restassured.RestAssured.given;
 import com.jayway.restassured.parsing.Parser;
 import static com.jayway.restassured.path.json.JsonPath.from;
+import deploy.DeploymentConfiguration;
 import org.eclipse.jetty.server.Server;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
@@ -19,6 +20,7 @@ public class CurrencyRestTest {
     static Server server;
 
     public CurrencyRestTest() {
+        DeploymentConfiguration.setTestModeOn();
         baseURI = "http://localhost:8080";
         defaultParser = Parser.JSON;
         basePath = "/AngSeedServer/api";

@@ -5,6 +5,7 @@ import static com.jayway.restassured.RestAssured.baseURI;
 import static com.jayway.restassured.RestAssured.defaultParser;
 import static com.jayway.restassured.RestAssured.given;
 import com.jayway.restassured.parsing.Parser;
+import deploy.DeploymentConfiguration;
 import entity.User;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -21,6 +22,7 @@ public class CreateUserRestTest {
     static Server server;
 
     public CreateUserRestTest() {
+        DeploymentConfiguration.setTestModeOn();
         baseURI = "http://localhost:8082";
         defaultParser = Parser.JSON;
         basePath = "/api";
