@@ -35,6 +35,7 @@ angular.module('myApp.security', [])
   $scope.isUser = false;
   $scope.message = '';
   $scope.error = null;
+  $scope.success = null;
 
   $scope.login = function () {
     $http
@@ -55,6 +56,7 @@ angular.module('myApp.security', [])
                  }
               });
               $scope.error = null;
+              $scope.success = null;
               $location.path("#/home");
             })
             .error(function (data, status, headers, config) {
@@ -88,6 +90,7 @@ angular.module('myApp.security', [])
       $scope.isAdmin = profile.role === "Admin";
       $scope.isUser = !$scope.isAdmin;
       $scope.error = null;
+      $scope.success = null;
     }
   };
 // and fire it after definition
@@ -101,6 +104,7 @@ angular.module('myApp.security', [])
           config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
         }
         $rootScope.error = "";
+        $rootScope.success = "";
         return config;
       },
       responseError: function (rejection) {
