@@ -128,40 +128,42 @@
     <p><strong>RestAssured</strong></p>
     <img src="assets/pictures/tests/rest/restTests.png" alt="RestAssured">
     <br>
-    <h3 class="text-muted">Implementering af arv</h3>
-    <hr/>
-    <p>De to entiteter person og company nedarver fra InfoEntity via annotationen @Inheritance med strategien "InheritanceType.JOINED". Vi har valgt at bruge strategien JOINED, da den afspejler forretningsdomænet.  Dvs. de enkelte tabeller indeholder kun de lokale attributter,  samt en primærnøgle som oprettes i InfoEntitytabellen.</p>
-    <br>
     <h3 class="text-muted">Guide til test af system</h3>
     <hr/>
     <h4 class="text-muted">Openshift</h4>
-    <p>På grund af tidmangel er det kun muligt at teste funktionerne på Person siden, Company siden er kun lavet rent grafisk, som et eksempel på hvordan det ville se ud.</p>
-    <p>Dog kan alle funktioner testes via "PostMan", se nedenstående eksempler.</p>
-    <br>
-    <h4 class="text-muted">Rest Assured</h4>
-    <p>Tilføjelsen af Security Authentication har medført at vores Rest Assured test fejler. For at teste vores api'er er det derfor nødvendigt at slette alt Security i web.xml filen.  </p>
+    <p>De forskellige søge muligheder og funktioner, kan testes ved at logge ind. Passwordet til alle test brugerne er "test". Brugernavnet "user" giver adgang til Comapny Info delen.</p>
+    <p>Brugernavnet "admin" giver adgang til All Users delen, som gør det muligt at slette brugere, og se alle brugere. Brugernavnet "user_admin" giver adgang til alle funktioner.</p>
+    <p>Alle de forskellige api'er kan testes ved brug af postman.</p>
     <br>
     <h4 class="text-muted">PostMan</h4>
-    <p>Eksempler på URL til postman med Basic Authentication 'test' 'test'</p>
-    <h5 class="text-muted">CVR</h5>
-    <p>https://localhost:8443/CA2/api/company/22350888</p>
-    <h5 class="text-muted">Complete</h5>
-    <p>https://localhost:8443/CA2/api/company/complete</p>
-    <h5 class="text-muted">Marketvalue</h5>
-    <p>https://localhost:8443/CA2/api/company/marketvalue/50000000</p>
-    <h5 class="text-muted">Employee</h5>
-    <p>https://localhost:8443/CA2/api/company/employees/41000</p>
-    <h5 class="text-muted">Employee</h5>
-    <p>https://localhost:8443/CA2/api/company/employees/46000</p>
-    <h5 class="text-muted">Phone</h5>
-    <p>https://localhost:8443/CA2/api/person/get/09144533</p>
-    <h5 class="text-muted">ZipCode</h5>
-    <p>https://localhost:8443/CA2/api/person/city/2800</p>
-    <h5 class="text-muted">Hobby count</h5>
-    <p>https://localhost:8443/CA2/api/person/hobbycount/mushroom hunting</p>
-    <h5 class="text-muted">Delete</h5>
-    <p>https://localhost:8443/CA2/api/person/delete/249</p>
+    <p>Eksempler hvor der ikke skal bruges noget authentication</p>
+    <h5 class="text-muted">Login</h5>
+    <p>https://localhost:8080/AngSeedServer/api/login</p>
+    <p>Body skal inde holde: {userName: "dit brugernavne", password: "dit password"}</p>
+    <h5 class="text-muted">Create User</h5>
+    <p>https://localhost:8080/AngSeedServer/api/create</p>
+    <p>Body skal indeholde: {userName: "dit brugernavn", password: "dit password"}</p>
     <br>
+    <p>Eksempler hvor der skal bruges authentication token fra en user</p>
+    <h5 class="text-muted">Company Info</h5>
+    <p>https://localhost:8080/AngSeedServer/api/search/"option"/"search text"/"country"</p>
+    <p>Option er hvad du vil søge efter eks. vat, name. Search text er det firma du vil søge efter eks. CVR nr. eller navn. Country er det land du vil søge i eks. dk eller no.</p>
+    <h5 class="text-muted">Exchange Rate Info</h5>
+    <p>https://localhost:8080/AngSeedServer/api/currency/dailyrates</p>
+    <p></p>
+    <p>Eksempler hvor der skal bruges authentication token fra en admin</p>
+    <h5 class="text-muted">All Users</h5>
+    <p>https://localhost:8080/AngSeedServer/api/admin/users</p>
+    <p></p>
+    <h5 class="text-muted">Delete User</h5>
+    <p>https://localhost:8080/AngSeedServer/api/admin/delete</p>
+    <p>Body skal indeholde: {userName:"dit brugernavn"}</p> 
+    <br>
+    
+    
+    
+    
+    
     <h3 class="text-muted">Hvem har lavet hvad</h3>
     <hr/>
     <p>Med projektets størrelse in mente, har vi alle arbejdet med lidt af det hele, og den nedenstående beskrivelse skal derfor anses som et overblik over hvem der har været den primære ansvarlige. Vi mener derfor også at alle har gjort sig fortjent til det fulde antal Studypoints</p>
