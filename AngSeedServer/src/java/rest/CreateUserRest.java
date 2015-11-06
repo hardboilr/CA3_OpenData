@@ -26,6 +26,13 @@ public class CreateUserRest {
     public CreateUserRest() {
     }
 
+    /**
+     * Creates a new user, add to db and return created user as Json-object. If
+     * user exists return a json-Object with error-message.
+     *
+     * @param user json-string
+     * @return json-Object with created user
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

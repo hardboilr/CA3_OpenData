@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 public class AllUsersRest {
     
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    UserFacade uf = new UserFacade();
+    UserFacade ctrl = new UserFacade();
 
     @Context
     private UriInfo context;
@@ -29,21 +29,30 @@ public class AllUsersRest {
     public AllUsersRest() {
     }
 
+    /**
+     * Gets all users from db and returns them as a jsonArray.
+     * @return jsonArray  
+     */
     @GET
     @Path("/users")
     @Produces("application/json")
     public Response getAllUsers() {
-        List<User> list = uf.getAllUsers();
+        List<User> list = ctrl.getAllUsers();
         return Response.status(Response.Status.OK).entity(gson.toJson(list)).build();
     }
 
+    /**
+     * Deletes a user from db and returns deleted user as jsonObject
+     * @param user Json-string
+     * @return jsonObject with deleted user
+     */
     @PUT
     @Path("/user")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteUser(String user) {
         User user1 = gson.fromJson(user, User.class);
-        uf.deleteUser(user1.getUserName());
+        ctrl.deleteUser(user1.getUserName());
         return Response.status(Response.Status.OK).entity(gson.toJson(user1)).build();
     }
 }

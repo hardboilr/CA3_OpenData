@@ -71,7 +71,7 @@ public class CreateUserRestTest {
 
     @Test
     public void createExistingUser() {
-        User user1 = new User("hans", "1234");
+        User user1 = new User("kurt", "1234");
         //Create a new user 
         given().contentType("application/json").
                 body(user1).
@@ -79,10 +79,10 @@ public class CreateUserRestTest {
                 post("/create").
                 then().
                 statusCode(201).
-                body("userName", equalTo("hans")).
+                body("userName", equalTo("kurt")).
                 body("roles", hasItems("User"));
         //Try to create the same user again
-        User user2 = new User("hans", "1234");
+        User user2 = new User("kurt", "1234");
         given().contentType("application/json").
                 body(user1).
                 when().
