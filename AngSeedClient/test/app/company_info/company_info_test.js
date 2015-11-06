@@ -12,7 +12,7 @@ describe('myApp.CompanyInfo CompanyInfoCtrl', function () {
 
     beforeEach(inject(function ($httpBackend, $rootScope, $controller) {
         httpBackendMock = $httpBackend;
-        httpBackendMock.expectGET('http://cvrapi.dk/api?vat=31678021&country=dk').respond(testResponse);
+        httpBackendMock.expectGET('api/search/vat/31678021/dk').respond(testResponse);
         scope = $rootScope.$new();
         ctrl = $controller('CompanyInfoCtrl', {$scope: scope});
     }));
@@ -22,8 +22,8 @@ describe('myApp.CompanyInfo CompanyInfoCtrl', function () {
         ctrl.search();
         httpBackendMock.flush();
 //        console.log(scope);
-        expect(scope.data.vat).toEqual("31678021");
-        expect(scope.data.zipcode).toEqual("1119");
+        expect(scope.vat).toEqual("31678021");
+        expect(scope.zipcode).toEqual("1119");
 //        expect(scope.data.error).toEqual("INVALID_VAT");
     });
 });
