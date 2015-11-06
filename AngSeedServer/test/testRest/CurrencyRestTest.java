@@ -11,6 +11,9 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 import org.junit.Test;
 
+/**
+ * OBS: Uses the local tomcat server and not jetty, so the tomcat server has to be running.
+ */
 public class CurrencyRestTest {
 
     static Server server;
@@ -43,7 +46,7 @@ public class CurrencyRestTest {
                 then().
                 statusCode(200).
                 body("size()", equalTo(33)).
-                body("dateField", hasItems("nov 5, 2015")).
+                body("dateField", hasItems("Nov 5, 2015")).
                 body("currency.currencyCode", hasItems("AUD", "BGN", "BRL", "CAD", "CHF", "CNY", "CZK", "EUR", "GBP", "HKD",
                                 "HRK", "HUF", "IDR", "ILS", "INR", "ISK", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PLN",
                                 "RON", "RUB", "SEK", "SGD", "THB", "TRY", "USD", "XDR", "ZAR")).
