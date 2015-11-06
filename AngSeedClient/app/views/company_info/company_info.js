@@ -17,7 +17,7 @@ angular.module('myApp.CompanyInfo', ['ngRoute'])
 
             self.search = function () {
 //                Use this url for karma tests
-//                var url = "http://cvrapi.dk/api?vat=31678021&country=dk";
+//                var url = "api/search/vat/31678021/dk";
 
 //                Use this url for live testing
                 var url = "api/search/" + self.searchQuery.option + "/" + self.searchQuery.query + "/" + self.searchQuery.country;
