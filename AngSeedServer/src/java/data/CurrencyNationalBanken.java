@@ -36,16 +36,16 @@ public class CurrencyNationalBanken extends DefaultHandler implements Runnable {
         dailyRates = tmpDailyRates;
         EntityManager em = emf.createEntityManager();
         try {
+            em.getTransaction().begin();
             for (DailyRate dailyRate : dailyRates) {
                 Currency cur = em.find(Currency.class, dailyRate.getCurrency().getCurrencyCode());
                 if (cur != null) { //found existing currency
                     dailyRate.setCurrency(cur);
                 }
-                em.getTransaction().begin();
                 em.persist(dailyRate);
                 em.persist(cur);
-                em.getTransaction().commit();
             }
+            em.getTransaction().commit();
         } finally {
             em.close();
         }
