@@ -38,7 +38,6 @@
     
   </head>
   <body ng-app="myApp">
-
     <div class="container"  >
       <nav class="navbar navbar-default navbar-fixed-top " role="navigation" ng-controller="AppLoginCtrl">
         <div class="container">
@@ -73,9 +72,7 @@
               <p>Need an account? <a href="#/create_user"> Create One</a></p>
             </form>
             <div class="navbar-right" ng-show="isAuthenticated">
-              
               <p class="navbar-text">Logged on as: {{username}}</p>
-
               <button type="submit" class="btn btn-primary navbar-btn"  ng-click="logout()">Logout
               </button>
             </div>
@@ -83,7 +80,6 @@
           </div>
         </div>
       </nav>
-     
       <div class="container">
         <div style="margin-top: 85px;">
           <div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div>
@@ -92,9 +88,5 @@
         </div>
       </div>
     </div>
-
-   
-  
   </body>
 </html>
-
