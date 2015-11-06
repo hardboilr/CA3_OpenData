@@ -11,7 +11,7 @@ module.exports = function(config){
       'app/components/*.js',
 	  'app/views/**/*.js',
       'test/app/*.js',
-      'test/app/view*/**/*.js',
+      //'test/app/view*/**/*.js',
       'test/app/exchange_rate_info/**/*.js',
       'test/app/components/**/*.js',
 	  'test/app/company_info/*.js',

@@ -19,7 +19,7 @@ describe('myApp.ExchangeRateInfo ExchangeRateController', function () {
     ctrl = $controller('ExchangeRateController', {$scope: scope});
   }));
   
-    it('Should fetch a test message', function () {
+    t('Should fetch a test message', function () {
       expect(scope.info).toBeUndefined();
       ctrl.getDailyRates();
       httpBackendMock.flush();
