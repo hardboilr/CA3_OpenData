@@ -22,7 +22,7 @@ public class ApplicationConfig extends Application {
    */
   private void addRestResourceClasses(Set<Class<?>> resources) {
     resources.add(rest.AllUsersRest.class);
-    resources.add(rest.ComapnyInfoRest.class);
+    resources.add(rest.CompanyInfoRest.class);
     resources.add(rest.CreateUserRest.class);
     resources.add(rest.CurrencyRest.class);
     resources.add(security.JWTAuthenticationFilter.class);

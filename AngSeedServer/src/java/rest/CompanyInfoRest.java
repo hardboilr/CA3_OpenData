@@ -17,25 +17,29 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * REST Web Service
- *
- * @author Jonas
- */
 @RolesAllowed("User")
 @Path("search")
-public class ComapnyInfoRest {
+public class CompanyInfoRest {
 
     @Context
     private UriInfo context;
 
-    public ComapnyInfoRest() {
+    public CompanyInfoRest() {
     }
 
+    /**
+     * Returns json with searched company
+     * @param option 
+     * @param searchText
+     * @param country
+     * @return
+     * @throws MalformedURLException
+     * @throws IOException 
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{option}/{searchText}/{country}")
-    public Response serachForCompany(@PathParam("option") String option, @PathParam("searchText") String searchText, @PathParam("country") String country) throws MalformedURLException, IOException {
+    public Response searchForCompany(@PathParam("option") String option, @PathParam("searchText") String searchText, @PathParam("country") String country) throws MalformedURLException, IOException {
         String jsonStr = null;
         HttpURLConnection con = null;
         try {
@@ -56,9 +60,9 @@ public class ComapnyInfoRest {
             scan.close();
             return Response.status(con.getResponseCode()).entity(jsonStr).build();
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ComapnyInfoRest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CompanyInfoRest.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(ComapnyInfoRest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CompanyInfoRest.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

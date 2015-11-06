@@ -74,6 +74,51 @@
             </tr>
         </tbody>
     </table>
+    <h4 class="text-muted">RestService: CompanyInfoRest</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>GET</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>URL</th>
+                <th>Return</th>
+                <th>Response</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>api/search/{option}/{searchText}/{country}</td>
+                <td>Returnerer den søgte virksomhed i json</td>
+                <td>Succes: Statuscode: 200<br>Error: Statuskode "andet end 200", firmaet blev ikke fundet</td>
+            </tr>
+        </tbody>
+    </table>
+    <h4 class="text-muted">RestService: CurrencyRest</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>GET</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>URL</th>
+                <th>Return</th>
+                <th>Response</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>api/currency/dailyrates</td>
+                <td>Returnerer dagens valuta i et jsonArray</td>
+                <td>Succes: Statuscode: 200</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
     <h3 class="text-muted">Test</h3>
     <hr/>
     <h4 class="text-muted">Strategi</h4>
@@ -81,7 +126,7 @@
     <br>
     <p>Til at sikre at vores facadeklasser virker har vi udført flg. testcases.</p>
     <p><strong>RestAssured</strong></p>
-    <img src="pictures/resttest.png" alt="RestAssured">
+    <img src="assets/pictures/tests/rest/restTests.png" alt="RestAssured">
     <br>
     <h3 class="text-muted">Implementering af arv</h3>
     <hr/>
@@ -121,18 +166,15 @@
     <hr/>
     <p>Med projektets størrelse in mente, har vi alle arbejdet med lidt af det hele, og den nedenstående beskrivelse skal derfor anses som et overblik over hvem der har været den primære ansvarlige. Vi mener derfor også at alle har gjort sig fortjent til det fulde antal Studypoints</p>
     <h4 class="text-muted">Ansvarsfordeling</h4>
-    <p>Oprettelse af Entitetsklasser og database: Sebastian</p>
-    <p>Oprettelse af testdata: Tobias</p>
-    <p>Facade + jUnit-test: Company: Sebastian</p>
-    <p>Facade + jUnit-test: Person: Jonas</p>
-    <p>REST-API Person: Jonas</p>
-    <p>REST-API Company: Sebastian/Tobias</p>
-    <p>Test af REST-API: Person: Tobias</p>
-    <p>Test af REST-API: Company: Tobias</p>
-    <p>FrontEnd: Javascript(jquery, ajax) + html + bootstrap: Jonas</p>
-    <p>Documentation: Sebastian</p>
-    <p>Security: Fælles</p>
+    
+    <p>CompanyInfo frontend + restAPI: Jonas</p>
+    <p>Currency frontend + restAPI + backend: Sebastian & Tobias</p>
+    <p>Create user frontend + restAPI + backend: Jonas</p>
+    <p>Database-design: Fælles</p>
+    <p>Unit-test af Facade: Sebastian</p>
+    <p>Unit-test af REST-API: Tobias</p>
+    <p>FrontEnd-test: Fælles</p>
+    <p>Documentation: Fælles</p>
     <p>Deployment: Fælles</p>
-
 </div>
 

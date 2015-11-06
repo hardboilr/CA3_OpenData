@@ -1,12 +1,10 @@
 package rest;
 
 import com.google.gson.Gson;
-import deploy.DeploymentConfiguration;
 import entity.DailyRate;
 import facades.CurrencyFacade;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
-import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
