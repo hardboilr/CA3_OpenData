@@ -52,18 +52,18 @@ public class UserFacadeTest {
     
     @Test(expected = Exception.class)
     public void testGetUserByInvalidUserName() throws Exception{
-        User user = facade.getUserByUserName("Sebastian");
-        assertEquals("Sebastian", user.getUserName());
+        User user = facade.getUserByUserName("ole");
+        assertEquals("ole", user.getUserName());
         assertEquals("User", user.getRoles().get(0));
     }
     
     @Test
     public void testCreateUserWithNonExistingUsername() throws Exception{
-        User user = new User("Sebastian","Test");
+        User user = new User("ole","test");
         facade.createUser(user);
-        assertEquals("Sebastian", facade.getUserByUserName(user.getUserName()).getUserName());
+        assertEquals("ole", facade.getUserByUserName(user.getUserName()).getUserName());
         assertEquals(4, facade.getAllUsers().size());
-        facade.deleteUser("Sebastian");
+        facade.deleteUser("ole");
     }
     
     @Test(expected = Exception.class)
@@ -82,7 +82,7 @@ public class UserFacadeTest {
     
     @Test(expected = Exception.class)
     public void testAuthenticateUserWithInvalidUsername() throws InvalidKeySpecException, Exception{
-        assertEquals("User", facade.authenticateUser("Sebastian", "test").get(0));
+        assertEquals("User", facade.authenticateUser("ole", "test").get(0));
     }
     
     @Test

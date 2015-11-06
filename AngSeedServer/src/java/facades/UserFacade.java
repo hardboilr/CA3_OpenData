@@ -7,9 +7,9 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import security.PasswordHash;
 
 public class UserFacade {
@@ -23,14 +23,11 @@ public class UserFacade {
     public User getUserByUserName(String userName) throws Exception {
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<User> query = em.createNamedQuery("User.findByUserName", User.class).setParameter("userName", userName);
-            List<User> users = query.getResultList();
-            if (!users.isEmpty()) {
-                return users.get(0);
-            } else {
-                return new User();
-                /*throw new Exception("No user found with user-name: " + userName);*/
-            }
+            User user = em.find(User.class, userName);
+            return user;
+           
+            } catch (NoResultException ex){
+                throw new Exception("User not found");
 
         } finally {
             em.close();
