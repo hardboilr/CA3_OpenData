@@ -118,13 +118,128 @@
             </tr>
         </tbody>
     </table>
-    <br>
     <h3 class="text-muted">Test</h3>
     <hr/>
     <h4 class="text-muted">Strategi</h4>
-    <p>I forbindelse med udviklingen af applikationen har vi haft fokus på at udvikle et enkelt lag af gangen.  Det har medført at vi i forbindelse med vores test, først har udført JUnit test af facade klasserne, og derefter brugt Rest Assured/Postman til test af vores api?er.</p>
+    <p>I forbindelse med udviklingen af applikationen har vi haft fokus på at udvikle et enkelt lag af gangen.  Det har medført at vi i forbindelse med vores test, først har udført JUnit test af facade klasserne, og derefter brugt Rest Assured/Postman til test af vores api'er.</p>
     <br>
-    <p>Til at sikre at vores facadeklasser virker har vi udført flg. testcases.</p>
+    <p>Til at sikre at vores facadeklasser virker, har vi udført flg. testcases.</p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>Test id</th>
+                <th>Metode</th>
+                <th>Test case</th>
+                <th>Input</th>
+                <th>Forventet resultat</th>
+                <th>Resultat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>GetUserByUserNameSuccess</td>
+                <td>Hent bruger som eksisterer</td>
+                <td>String "user"</td>
+                <td>True</td>
+                <td>Passed</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>GetUserByUserNameError</td>
+                <td>Hent bruger som ikke eksisterer</td>
+                <td>String "ole"</td>
+                <td>Exception</td>
+                <td>Passed</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>CreateUserSuccess</td>
+                <td>Opret bruger med nyt brugernavn</td>
+                <td>String "ole", String "test"</td>
+                <td>True</td>
+                <td>Passed</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>CreateUserError</td>
+                <td>Opret bruger med eksistrende brugernavn</td>
+                <td>String "user", String "test"</td>
+                <td>Exception</td>
+                <td>Passed</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>AuthenticateUserSuccess</td>
+                <td>Godkend bruger input</td>
+                <td>String "user", String "test"</td>
+                <td>True</td>
+                <td>Passed</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>AuthenticateUserError</td>
+                <td>Godkend bruger input som ikke eksisterer</td>
+                <td>String "user", String "test"</td>
+                <td>Exception</td>
+                <td>Passed</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>GetAllUsers</td>
+                <td>Hent alle brugere</td>
+                <td></td>
+                <td>3</td>
+                <td>Passed</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <img src="assets/pictures/tests/facade/userFacadeTest.png" alt="TestUserFacade">
+    <br>
+    <br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Currency</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>Test id</th>
+                <th>Metode</th>
+                <th>Test case</th>
+                <th>Input</th>
+                <th>Forventet resultat</th>
+                <th>Resultat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>GetDailyRates</td>
+                <td>Hent alle valutakurser</td>
+                <td></td>
+                <td>33</td>
+                <td>Passed</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <img src="assets/pictures/tests/facade/currencyFacadeTest.png" alt="TestCurrencyFacade">
+    <br>
+    <br>
     <p><strong>RestAssured</strong></p>
     <img src="assets/pictures/tests/rest/restTests.png" alt="RestAssured">
     <br>
@@ -168,7 +283,7 @@
     <hr/>
     <p>Med projektets størrelse in mente, har vi alle arbejdet med lidt af det hele, og den nedenstående beskrivelse skal derfor anses som et overblik over hvem der har været den primære ansvarlige. Vi mener derfor også at alle har gjort sig fortjent til det fulde antal Studypoints</p>
     <h4 class="text-muted">Ansvarsfordeling</h4>
-    
+
     <p>CompanyInfo frontend + restAPI: Jonas</p>
     <p>Currency frontend + restAPI + backend: Sebastian & Tobias</p>
     <p>Create user frontend + restAPI + backend: Jonas</p>
