@@ -9,10 +9,16 @@ angular.module('myApp.CreateUser', ['ngRoute'])
                 });
             }])
 
-        .controller('CreateUserCtrl', function ($http) {
+        .controller('CreateUserCtrl', function ($http, $rootScope) {
             var self = this;
             self.user = {};
             self.createUser = function () {
-                $http.post("api/create", self.user);
+                $http.post("api/create", self.user)
+                        .success(function (data) {
+                            $rootScope.success = "User " + data.userName + " succesfullly created!";
+                        })
+                        .error(function () {
+                            $rootScope.error = "A user with that name already exist";
+                        });
             };
         });

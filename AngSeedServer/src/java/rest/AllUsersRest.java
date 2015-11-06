@@ -34,7 +34,6 @@ public class AllUsersRest {
     @Produces("application/json")
     public Response getAllUsers() {
         List<User> list = uf.getAllUsers();
-        System.out.println(gson.toJson(list));
         return Response.status(Response.Status.OK).entity(gson.toJson(list)).build();
     }
 

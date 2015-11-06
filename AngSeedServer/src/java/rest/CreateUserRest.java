@@ -2,6 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import entity.User;
 import facades.UserFacade;
 import javax.ws.rs.Consumes;
@@ -28,10 +29,15 @@ public class CreateUserRest {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createUser(String user) throws Exception {
+    public Response createUser(String user) {
         User u = gson.fromJson(user, User.class);
         u.AddRole("User");
-        uf.createUser(u);
+        try {
+            uf.createUser(u);
+        } catch (Exception ex) {
+            String error = "{\"message\": \"" + ex.getMessage() + "\"}";
+            return Response.status(Response.Status.CONFLICT).entity(error).build();
+        }
         return Response.status(Response.Status.CREATED).entity(gson.toJson(u)).build();
     }
 }
